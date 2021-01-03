@@ -108,7 +108,7 @@ function branch(city) {
     var listItem;
     for (var i = 0; i < city.hours.length; i++) {
         listItem = document.createElement('li');
-        listItem.innerText = 'Hour ' + hours[i] + ': ' + city.hours[i] + ' cookies';
+        listItem.innerText = `Hour ${hours[i]} : ${city.hours[i]}  cookies`;
         list.append(listItem);
     }
 
@@ -118,6 +118,6 @@ function branch(city) {
         sum += city.hours[i];
     }
     listItem = document.createElement('li');
-    listItem.innerText = 'TOTAL :' + sum + ' cookies';
+    listItem.innerText = `TOTAL :' ${sum} ' cookies`;
     list.append(listItem);
 }
