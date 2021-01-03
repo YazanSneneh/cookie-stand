@@ -82,10 +82,11 @@ function main() {
 
 // average number of cookies purchased per customer.
 function cookiePerCustomer(branch) {
-    var average = branch.randCustomerPerHour();
+    var average;
     var result = [];
     for (var i = 0; i < hours.length; i++) {
-        result.push(hours[i] * average);
+        average = branch.randCustomerPerHour();
+        result.push(Math.floor(branch.avgCookie) * average);
     }
     return result;
 }
