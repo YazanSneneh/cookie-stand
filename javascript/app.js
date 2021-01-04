@@ -2,83 +2,40 @@
 var branches = document.getElementById('cookie-branches');
 var hours = [`06:00 AM`, `07:00 AM`, `08:00 AM`, `09:00 AM`, `10:00 AM`, `11:00 AM`, `12:00 AM`,
     `01:00 PM`, `02:00 PM`, `03:00 PM`, `04:00 PM`, `05:00 PM`, `06:00 PM`, `07:00 PM`, `08:00 Pm`];
-//Create branches
-var seattle = {
-    location: 'Seattle',
-    min: 23,
-    max: 65,
-    avgCookie: 6.3,
-    hours: [],
-    randCustomerPerHour: function () {
-        var avgCustomer = Math.floor(Math.random() * ((this.max + this.min) / 2));
-        return avgCustomer;
-    }
-}
-var tokyo = {
-    location: 'Tokyo',
-    min: 3,
-    max: 24,
-    avgCookie: 1.2,
-    hours: [],
-    randCustomerPerHour: function () {
-        var avgCustomer = Math.floor(Math.random() * ((this.max + this.min) / 2));
-        return avgCustomer;
-    }
-}
-var dubai = {
-    location: 'Dubai',
-    min: 11,
-    max: 38,
-    avgCookie: 3.7,
-    hours: [],
-    randCustomerPerHour: function () {
-        var avgCustomer = Math.floor(Math.random() * ((this.max + this.min) / 2));
-        return avgCustomer;
-    }
-}
-var paris = {
-    location: 'Paris',
-    min: 20,
-    max: 38,
-    avgCookie: 2.3,
-    hours: [],
-    randCustomerPerHour: function () {
-        var avgCustomer = Math.floor(Math.random() * ((this.max + this.min) / 2));
-        return avgCustomer;
-    }
-}
-var lima = {
-    location: 'Lima',
-    min: 2,
-    max: 16,
-    avgCookie: 4.6,
-    hours: [],
-    randCustomerPerHour: function () {
-        var avgCustomer = Math.floor(Math.random() * ((this.max + this.min) / 2));
-        return avgCustomer;
-    }
-}
 
 
-main()
+// created branches objects using the object model
+var seattle = new Branch('Seattle', 23, 65, 6.3);
+var tokyo = new Branch('Tokyo', 3, 24, 1.2);
+var dubai = new Branch('Dubai', 11, 38, 3.7);
+var paris = new Branch('Paris', 20, 38, 2.3);
+var lima = new Branch('Lima', 2, 16, 4.6);
+
 // main function where all branches generated
 function main() {
-    seattle.hours = cookiePerCustomer(seattle);
-    branch(seattle);
+    var branchArray = [seattle, tokyo, dubai, paris, lima];
+    var totalBranch = branchArray.length;
 
-    tokyo.hours = cookiePerCustomer(tokyo);
-    branch(tokyo);
-
-    dubai.hours = cookiePerCustomer(dubai);
-    branch(dubai);
-
-    paris.hours = cookiePerCustomer(paris);
-    branch(paris);
-
-    lima.hours = cookiePerCustomer(lima);
-    branch(lima);
+    // loop through branches and calc numbers of cookiez needed then create branch list
+    for (var i = 0; i < totalBranch; i++) {
+        branchArray[i].customPerhour = cookiePerCustomer(branchArray[i]);
+        branch(branchArray[i]);
+    }
 }
+main();
 
+//Create data model
+function Branch(location, min, max, avgCookie) {
+    this.location = location;
+    this.min = min;
+    this.max = max;
+    this.avgCookie = avgCookie;
+    this.customPerhour = [];
+    this.randCustomerPerHour = function () {
+        var avgCustomers = (this.max + this.min) / 2;
+        return Math.floor(Math.random() * avgCustomers);
+    }
+}
 
 // average number of cookies purchased per customer.
 function cookiePerCustomer(branch) {
@@ -91,8 +48,9 @@ function cookiePerCustomer(branch) {
     return result;
 }
 
-// generate branch report
+// generate branch list
 function branch(city) {
+    // create branch container
     var branch = document.createElement('article');
     branch.setAttribute('id', city.location)
     branches.append(branch);
@@ -106,18 +64,18 @@ function branch(city) {
     var list = document.createElement('ul');
     branch.append(list);
     var listItem;
-    for (var i = 0; i < city.hours.length; i++) {
+    for (var i = 0; i < city.customPerhour.length; i++) {
         listItem = document.createElement('li');
-        listItem.innerText = `${hours[i]} : ${city.hours[i]}  cookies`;
+        listItem.innerText = `${hours[i]} : ${city.customPerhour[i]}  cookies`;
         list.append(listItem);
     }
 
     // create total number of cookiez item
     var sum = 0;
-    for (var i = 0; i < city.hours.length; i++) {
-        sum += city.hours[i];
+    for (var i = 0; i < city.customPerhour.length; i++) {
+        sum += city.customPerhour[i];
     }
     listItem = document.createElement('li');
-    listItem.innerText = `TOTAL :' ${sum} ' cookies`;
+    listItem.innerText = `TOTAL : ${sum} cookies`;
     list.append(listItem);
 }
