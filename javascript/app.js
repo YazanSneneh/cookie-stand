@@ -1,7 +1,22 @@
 'use strict';
-var branches = document.getElementById('cookie-branches');
-var hours = [`06:00 AM`, `07:00 AM`, `08:00 AM`, `09:00 AM`, `10:00 AM`, `11:00 AM`, `12:00 AM`,
-    `01:00 PM`, `02:00 PM`, `03:00 PM`, `04:00 PM`, `05:00 PM`, `06:00 PM`, `07:00 PM`, `08:00 Pm`];
+var tableContainer = document.getElementById('cookie-branches');
+var hours = [`6:00am`, `7:00am`, `8:00am`, `9:00am`, `10:00am`, `11:00am`, `12:00am`,
+    `1:00pm`, `2:00pm`, `3:00pm`, `4:00pm`, `5:00pm`, `6:00pm`, `7:00pm`, `8:00pm`];
+
+//BRANCHES DATA MODEL 
+function Branch(location, min, max, avgCookie, customPerhour, cookiePerHour) {
+    this.location = location;
+    this.minCustomers = min;
+    this.maxCustomers = max;
+    this.avgCookie = avgCookie;
+    this.customPerhour = customPerhour;
+    this.cookiePerHour = cookiePerHour;
+}
+// prototype methods
+Branch.prototype.randCustomerPerHour = function () {
+    var avgCustomers = (this.maxCustomers + this.minCustomers) - this.minCustomers;
+    return Math.floor(Math.random() * avgCustomers);
+}
 
 // created branches objects using the object model
 var seattle = new Branch('Seattle', 23, 65, 6.3);
@@ -10,74 +25,77 @@ var dubai = new Branch('Dubai', 11, 38, 3.7);
 var paris = new Branch('Paris', 20, 38, 2.3);
 var lima = new Branch('Lima', 2, 16, 4.6);
 
+main()
+
 function main() { // main function where all branches generated
     var branchArray = [seattle, tokyo, dubai, paris, lima];
     var totalBranch = branchArray.length;
-
-    // loop through branches and calc numbers of cookiez needed then create branch list
+    // create customer per hour for each branch
     for (var i = 0; i < totalBranch; i++) {
-        branchArray[i].customPerhour = cookiePerCustomer(branchArray[i]);
-        branch(branchArray[i]);
+        branchArray[i].customPerhour = customPerhour(branchArray[i])
     }
+    for (var i = 0; i < totalBranch; i++) {
+        branchArray[i].cookiePerHour = cookiePerHour(branchArray[i]);
+    }
+    branch(branchArray)
 }
-main();
 
-//BRANCHES DATA MODEL 
-function Branch(location, min, max, avgCookie) {
-    this.location = location;
-    this.minCustomers = min;
-    this.maxCustomers = max;
-    this.avgCookie = avgCookie;
-    this.customPerhour = [];
-    this.randCustomerPerHour = function () {
-        var avgCustomers = (this.maxCustomers + this.minCustomers) - this.minCustomers;
-        return Math.floor(Math.random() * avgCustomers);
+function customPerhour(branch) { // generate array of expected customers each hour
+    var averageCustomers = [];
+    for (var i = 0; i < hours.length; i++) {
+        averageCustomers.push(branch.randCustomerPerHour());
     }
+    return averageCustomers;
 }
-// prototype methods
-Branch.prototype.randCustomerPerHour = function () {
-    var avgCustomers = (this.maxCustomers + this.minCustomers) - this.minCustomers;
-    return Math.floor(Math.random() * avgCustomers);
-}
-// average number of cookies purchased per customer.
-function cookiePerCustomer(branch) {
-    var averageCustomers;
+
+function cookiePerHour(branch) { // generate array of expected cookie sold per hour
     var result = [];
     for (var i = 0; i < hours.length; i++) {
-        averageCustomers = branch.randCustomerPerHour();
-        result.push(Math.floor(branch.avgCookie) * averageCustomers);
+        result.push(Math.floor(branch.avgCookie) * branch.customPerhour[i]);
     }
     return result;
 }
 
-// generate branch list
-function branch(city) {
-    // create branch container
-    var branch = document.createElement('article');
-    branch.setAttribute('id', city.location)
-    branches.append(branch);
+// Generate and inject table into HTML
+function branch(branchArray) {
+    var totalHours = hours.length; // total number of hours
+    var th, td, tr;
+    var table = document.createElement('table'); // create and inject table element
+    tableContainer.append(table);
 
-    // create heading for branch
-    var title = document.createElement('h3');
-    title.textContent = city.location;
-    branch.append(title);
-
-    // inject hours into html page
-    var list = document.createElement('ul');
-    branch.append(list);
-    var listItem;
-    for (var i = 0; i < city.customPerhour.length; i++) {
-        listItem = document.createElement('li');
-        listItem.innerText = `${hours[i]} : ${city.customPerhour[i]}  cookies`;
-        list.append(listItem);
+    var tableHeader = document.createElement('tr');   // create and inject table header
+    table.append(tableHeader)
+    th = document.createElement('th');
+    th.textContent = '';
+    tableHeader.append(th);
+    for (var i = 0; i < totalHours; i++) {
+        th = document.createElement('th');
+        th.textContent = hours[i];
+        tableHeader.append(th);
     }
 
-    // create total number of cookiez item
-    var sum = 0;
-    for (var i = 0; i < city.customPerhour.length; i++) {
-        sum += city.customPerhour[i];
+    for (var row = 0; row < branchArray.length; row++) { // create table row for each branch
+        tr = document.createElement('tr');
+        table.append(tr)
+        td = document.createElement('td');
+        td.textContent = branchArray[row].location;
+        tr.append(td);
+        for (var i = 0; i < totalHours; i++) {  // create row data
+            td = document.createElement('td');
+            td.textContent = branchArray[row].cookiePerHour[i];
+            tr.append(td);
+        }
     }
-    listItem = document.createElement('li');
-    listItem.textContent = `TOTAL : ${sum} cookies`;
-    list.append(listItem);
+
+    var tableFooter = document.createElement('tr');    // create and inject table footer
+    table.append(tableFooter)
+    th = document.createElement('th');
+    th.textContent = 'Total :';
+    tableFooter.append(th);
+    for (var i = 0; i < totalHours; i++) {
+        th = document.createElement('th');
+        th.textContent = ' ';
+        tableFooter.append(th);
+    }
+
 }
