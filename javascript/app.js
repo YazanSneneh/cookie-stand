@@ -1,6 +1,7 @@
 'use strict';
 var branches = document.getElementById('cookie-branches');
-var hours = [6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
+var hours = [`06:00 AM`, `07:00 AM`, `08:00 AM`, `09:00 AM`, `10:00 AM`, `11:00 AM`, `12:00 AM`,
+    `01:00 PM`, `02:00 PM`, `03:00 PM`, `04:00 PM`, `05:00 PM`, `06:00 PM`, `07:00 PM`, `08:00 Pm`];
 //Create branches
 var seattle = {
     location: 'Seattle',
@@ -60,7 +61,6 @@ var lima = {
 
 
 main()
-
 // main function where all branches generated
 function main() {
     seattle.hours = cookiePerCustomer(seattle);
@@ -108,7 +108,7 @@ function branch(city) {
     var listItem;
     for (var i = 0; i < city.hours.length; i++) {
         listItem = document.createElement('li');
-        listItem.innerText = `Hour ${hours[i]} : ${city.hours[i]}  cookies`;
+        listItem.innerText = `${hours[i]} : ${city.hours[i]}  cookies`;
         list.append(listItem);
     }
 
