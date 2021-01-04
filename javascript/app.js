@@ -3,7 +3,6 @@ var branches = document.getElementById('cookie-branches');
 var hours = [`06:00 AM`, `07:00 AM`, `08:00 AM`, `09:00 AM`, `10:00 AM`, `11:00 AM`, `12:00 AM`,
     `01:00 PM`, `02:00 PM`, `03:00 PM`, `04:00 PM`, `05:00 PM`, `06:00 PM`, `07:00 PM`, `08:00 Pm`];
 
-
 // created branches objects using the object model
 var seattle = new Branch('Seattle', 23, 65, 6.3);
 var tokyo = new Branch('Tokyo', 3, 24, 1.2);
@@ -11,8 +10,7 @@ var dubai = new Branch('Dubai', 11, 38, 3.7);
 var paris = new Branch('Paris', 20, 38, 2.3);
 var lima = new Branch('Lima', 2, 16, 4.6);
 
-// main function where all branches generated
-function main() {
+function main() { // main function where all branches generated
     var branchArray = [seattle, tokyo, dubai, paris, lima];
     var totalBranch = branchArray.length;
 
@@ -24,26 +22,30 @@ function main() {
 }
 main();
 
-//Create data model
+//BRANCHES DATA MODEL 
 function Branch(location, min, max, avgCookie) {
     this.location = location;
-    this.min = min;
-    this.max = max;
+    this.minCustomers = min;
+    this.maxCustomers = max;
     this.avgCookie = avgCookie;
     this.customPerhour = [];
     this.randCustomerPerHour = function () {
-        var avgCustomers = (this.max + this.min) / 2;
+        var avgCustomers = (this.maxCustomers + this.minCustomers) - this.minCustomers;
         return Math.floor(Math.random() * avgCustomers);
     }
 }
-
+// prototype methods
+Branch.prototype.randCustomerPerHour = function () {
+    var avgCustomers = (this.maxCustomers + this.minCustomers) - this.minCustomers;
+    return Math.floor(Math.random() * avgCustomers);
+}
 // average number of cookies purchased per customer.
 function cookiePerCustomer(branch) {
-    var average;
+    var averageCustomers;
     var result = [];
     for (var i = 0; i < hours.length; i++) {
-        average = branch.randCustomerPerHour();
-        result.push(Math.floor(branch.avgCookie) * average);
+        averageCustomers = branch.randCustomerPerHour();
+        result.push(Math.floor(branch.avgCookie) * averageCustomers);
     }
     return result;
 }
@@ -57,7 +59,7 @@ function branch(city) {
 
     // create heading for branch
     var title = document.createElement('h3');
-    title.innerText = city.location;
+    title.textContent = city.location;
     branch.append(title);
 
     // inject hours into html page
@@ -76,6 +78,6 @@ function branch(city) {
         sum += city.customPerhour[i];
     }
     listItem = document.createElement('li');
-    listItem.innerText = `TOTAL : ${sum} cookies`;
+    listItem.textContent = `TOTAL : ${sum} cookies`;
     list.append(listItem);
 }
