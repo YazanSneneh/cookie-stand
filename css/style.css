@@ -1,4 +1,7 @@
 /* fonts style */
+body{
+    text-align: center;
+}
 .inconsolata{
     font-family: 'Inconsolata', monospace;
     color: #290001;
@@ -46,8 +49,10 @@ main{
  table,td{
     border:1px solid;
     border-collapse:collapse;
+    margin: auto;
     
 }
+table
 td,th{
     padding: 5px;
 }
