@@ -39,15 +39,19 @@ a:hover {
     color:#f0e2d0;
 }
 main{
-    padding: 10px 15px;
+    padding: 90px 15px;
 }
 
 /* table */
+table{
+    margin: auto;
+}
  table,td{
     border:1px solid;
     border-collapse:collapse;
-    
+    text-align: center;
 }
+
 td,th{
     padding: 5px;
 }
