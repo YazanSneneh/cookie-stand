@@ -23,8 +23,30 @@
         </nav>
 
     </header>
-    <main id="cookie-branches">
+    <main>
+        <section>
+            <form id="form">
+                <!-- <fieldset> -->
+                <legend>Add New Branch</legend>
 
+                <label for="location">Branch name</label>
+                <input type="text" name="location"> <br>
+
+                <label for="minCustomer">minimum customer per hour</label>
+                <input type="number" name="minCustomer"> <br>
+
+                <label for="maxCustomer">Maximum customer per hour</label>
+                <input type="number" name="maxCustomer"> <br>
+
+                <label for="avgCookie">Average cookie each Customer buy</label>
+                <input type="text" name="avgCookie"> <br>
+                <!-- </fieldset> -->
+                <input type="submit">
+            </form>
+        </section>
+        <section id="cookie-branches">
+
+        </section>
     </main>
     <script src='javascript/app.js'></script>
 </body>
