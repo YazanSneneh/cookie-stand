@@ -54,8 +54,8 @@ var lima = {
     avgCookie: 4.6,
     hours: [],
     randCustomerPerHour: function () {
-        var avgCustomer = Math.floor(Math.random() * ((this.max + this.min) / 2));
-        return avgCustomer;
+        var avgCustomers = Math.random() * (this.maxCustomers - this.minCustomers) + this.minCustomers;
+        return Math.floor(avgCustomers);
     }
 }
 
