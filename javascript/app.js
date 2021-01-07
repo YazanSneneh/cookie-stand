@@ -14,8 +14,8 @@ function Branch(location, min, max, avgCookie) {
     this.minCustomers = min;
     this.maxCustomers = max;
     this.avgCookie = avgCookie;
-    this.customPerhour = customPerhour;
-    this.cookiePerHour = cookiePerHour;
+    this.customPerhour = [];
+    this.cookiePerHour = [];
     branchArray.push(this)
 }
 // prototype methods
@@ -51,6 +51,7 @@ function cookiePerHour(branch) { // generate array of expected cookie sold per h
 
 function tableHeader(table, totalHours) {   // generate table header
     var theader = document.createElement('tr');
+    theader.setAttribute('class', "robot-slap")
     var th = document.createElement('th');
     table.append(theader)
     th.textContent = ' ';
@@ -80,6 +81,7 @@ function tableRow(table, totalHours, branch) {   // create a row for branch
         tr.append(td);
         total += branch.cookiePerHour[i];
     }
+
     td = document.createElement('td');
     td.textContent = total;
     tr.append(td);
@@ -90,12 +92,13 @@ function tableFooter(table, totalHours, branchArray) {
     var salesTotal = 0;
     var tFooter = document.createElement('tr');
     tFooter.setAttribute('id', 'table-footer')  // add id so i target when i create new branch
+    tFooter.setAttribute('class', 'inconsolata')
     var th = document.createElement('th');
 
     table.append(tFooter); // append footer to table
-
     th.textContent = 'total'; // add total keyword for each hour
     tFooter.append(th);
+
     for (var i = 0; i < totalHours; i++) {    // generate total sales for each hour
         total = 0;
         for (var cell = 0; cell < branchArray.length; cell++) {
@@ -104,9 +107,8 @@ function tableFooter(table, totalHours, branchArray) {
         th = document.createElement('th');  // create total sales for all branches per day
         th.textContent = total;
         tFooter.append(th);
-        salesTotal += total
+        salesTotal += total;
     }
-
     th = document.createElement('th'); // add total sales for all totals
     th.textContent = salesTotal;
     tFooter.append(th);
@@ -124,11 +126,11 @@ function tableGenerator(branchArray) {
     tableFooter(table, totalHours, branchArray) // generate footer
 }
 
-form.addEventListener('submit', function (event) {  // create new element
+form.addEventListener('submit', function (event) {  // create new branch
     event.preventDefault();
     var location = event.target.location.value;
-    var min = event.target.minCustomer.value;
-    var max = event.target.maxCustomer.value;
+    var min = parseInt(event.target.minCustomer.value);
+    var max = parseInt(event.target.maxCustomer.value);
     var avgCookie = parseFloat(event.target.avgCookie.value);
 
     newrBanch = new Branch(location, min, max, avgCookie);
@@ -151,6 +153,4 @@ for (var i = 0; i < branchArray.length; i++) { // create customer per hour for e
 for (var i = 0; i < branchArray.length; i++) { // create cookie per hour for each branch
     branchArray[i].cookiePerHour = cookiePerHour(branchArray[i]);
 }
-
 tableGenerator(branchArray) // inject table into html
-
