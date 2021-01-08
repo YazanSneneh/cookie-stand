@@ -10,10 +10,11 @@ var seattle = {
     avgCookie: 6.3,
     hours: [],
     randCustomerPerHour: function () {
-        var avgCustomers = Math.random() * (this.maxCustomers - this.minCustomers) + this.minCustomers;
+        var avgCustomers = Math.random() * (this.max - this.min) + this.min;
         return Math.floor(avgCustomers);
     }
 }
+console.log(seattle.randCustomerPerHour())
 var tokyo = {
     location: 'Tokyo',
     min: 3,
@@ -21,7 +22,7 @@ var tokyo = {
     avgCookie: 1.2,
     hours: [],
     randCustomerPerHour: function () {
-        var avgCustomers = Math.random() * (this.maxCustomers - this.minCustomers) + this.minCustomers;
+        var avgCustomers = Math.random() * (this.max - this.min) + this.min;
         return Math.floor(avgCustomers);
     }
 }
@@ -32,7 +33,7 @@ var dubai = {
     avgCookie: 3.7,
     hours: [],
     randCustomerPerHour: function () {
-        var avgCustomers = Math.random() * (this.maxCustomers - this.minCustomers) + this.minCustomers;
+        var avgCustomers = Math.random() * (this.max - this.min) + this.min;
         return Math.floor(avgCustomers);
     }
 }
@@ -43,7 +44,7 @@ var paris = {
     avgCookie: 2.3,
     hours: [],
     randCustomerPerHour: function () {
-        var avgCustomers = Math.random() * (this.maxCustomers - this.minCustomers) + this.minCustomers;
+        var avgCustomers = Math.random() * (this.max - this.min) + this.min;
         return Math.floor(avgCustomers);
     }
 }
@@ -54,7 +55,7 @@ var lima = {
     avgCookie: 4.6,
     hours: [],
     randCustomerPerHour: function () {
-        var avgCustomers = Math.random() * (this.maxCustomers - this.minCustomers) + this.minCustomers;
+        var avgCustomers = Math.random() * (this.max - this.min) + this.min;
         return Math.floor(avgCustomers);
     }
 }
