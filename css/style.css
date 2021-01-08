@@ -19,6 +19,10 @@ body{
     background-color: #f0e2d0;
     margin: 0;
 }
+main{
+    padding: 10px 15px;
+}
+
 nav{
     background-color: #7c9473;
     position: relative;
@@ -37,9 +41,6 @@ a {
 }
 a:hover {
     color:#f0e2d0;
-}
-main{
-    padding: 10px 15px;
 }
 
 
