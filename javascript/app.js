@@ -30,7 +30,6 @@ var tokyo = new Branch('Tokyo', 3, 24, 1.2);
 var dubai = new Branch('Dubai', 11, 38, 3.7);
 var paris = new Branch('Paris', 20, 38, 2.3);
 var lima = new Branch('Lima', 2, 16, 4.6);
-var newrBanch;
 
 // function declerations 
 function customPerhour(branch) { // generate array of expected customers each hour
@@ -132,15 +131,9 @@ form.addEventListener('submit', function (event) {  // create new branch
     var min = parseInt(event.target.minCustomer.value);
     var max = parseInt(event.target.maxCustomer.value);
     var avgCookie = parseFloat(event.target.avgCookie.value);
+    var newrBanch = new Branch(location, min, max, avgCookie);
 
-    newrBanch = new Branch(location, min, max, avgCookie);
-
-    for (var i = 0; i < branchArray.length; i++) { // create customer per hour for each branch
-        branchArray[i].customPerhour = customPerhour(branchArray[i]);
-    }
-    for (var i = 0; i < branchArray.length; i++) { // create cookie per hour for each branch
-        branchArray[i].cookiePerHour = cookiePerHour(branchArray[i]);
-    }
+    cookieAndCustomerPerHour(branchArray)
     // remove footer -> add branch -> calculate totals again
     document.getElementById('table-footer').remove()
     tableRow(table, totalHours, newrBanch)
@@ -149,8 +142,14 @@ form.addEventListener('submit', function (event) {  // create new branch
 
 for (var i = 0; i < branchArray.length; i++) { // create customer per hour for each branch
     branchArray[i].customPerhour = customPerhour(branchArray[i]);
-}
-for (var i = 0; i < branchArray.length; i++) { // create cookie per hour for each branch
     branchArray[i].cookiePerHour = cookiePerHour(branchArray[i]);
 }
+
+function cookieAndCustomerPerHour(branchArray) {
+    for (var i = 0; i < branchArray.length; i++) { // create customer per hour for each branch
+        branchArray[i].customPerhour = customPerhour(branchArray[i]);
+        branchArray[i].cookiePerHour = cookiePerHour(branchArray[i]);
+    }
+}
+cookieAndCustomerPerHour(branchArray)
 tableGenerator(branchArray) // inject table into html
