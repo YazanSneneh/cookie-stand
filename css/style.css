@@ -1,7 +1,11 @@
 /* fonts style */
+body{
+    text-align: center;
+}
 .inconsolata{
     font-family: 'Inconsolata', monospace;
-    color: #290001;
+    background-color: #290001;
+    color: #dddddd;
 }
 .roboto-condensed{
     font-family: 'Roboto Condensed', sans-serif;
@@ -9,9 +13,8 @@
 }
 .robot-slap{
     font-family: 'Roboto Slab', serif;
-    background-color: #74c7b8;
+    background-color: #ee9595;
     color:#00303f;
-
 }
 
 /* elements style */
@@ -23,11 +26,10 @@ nav{
     background-color: #7c9473;
     position: relative;
     padding: 15px;
-
+    text-align: left;
 }
 img.logo{
     width: 150px;
-    margin-right: 200px;
 }
 a {
     text-decoration: none;
@@ -42,4 +44,31 @@ main{
     padding: 10px 15px;
 }
 
+/* table */
+ table,td{
+    border:1px solid;
+    border-collapse:collapse;
+    margin: auto;
+    
+}
+table{
+    background-color: #dddddd;
+}
+td,th{
+    padding: 10px;
+}
+/* form style  */
+form label, input{
+    display: inline-block;
+    width: 30%;
+}
+input{
+    
+    padding: 5px;
+    margin: 5px auto;
+}
 
+legend{
+    font-size: 40px;
+    margin: 17px 0;
+}
